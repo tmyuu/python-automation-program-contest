@@ -38,8 +38,7 @@ def mercari_scraping(response):
 
 	count = 0
 	try:
-		# get image elements
-
+		# スクロールして画像を取得
 		height = browser.execute_script("return document.body.scrollHeight")
 		while height > 0:
 			browser.execute_script(f"window.scrollTo(0, {height});")
@@ -57,11 +56,11 @@ def mercari_scraping(response):
 		for i, img in enumerate(image_elements):
 			if count >= 115:
 				break
-			# get url of image from img element
+			# URLから画像をダウンロード
 			img_url = img.get_attribute('src')
 			print(img_url)
 			if img_url:
-				# download image and save
+				# 画像の保存
 				response = requests.get(img_url)
 				image_path = os.path.join(image_dir, f'{extract_id_with_prefix_from_url(img_url)}.jpg')
 				with open(image_path, 'wb') as file:

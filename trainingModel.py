@@ -35,20 +35,20 @@ def scale_image_imgaug(image, scale_range=(0.9, 1.1)):
     return scaled_image
 
 
-# def gaussian_noise_imgaug(image):
-#     import imgaug.augmenters as iaa
+def gaussian_noise_imgaug(image):
+    import imgaug.augmenters as iaa
 
-#     # imgaugは0から255の範囲の値を期待するため、float64型の画像データを一時的に変換
-#     image_uint8 = (image * 255).astype(np.uint8)
+    # imgaugは0から255の範囲の値を期待するため、float64型の画像データを一時的に変換
+    image_uint8 = (image * 255).astype(np.uint8)
 
-#     # imgaugを使用してガウシアンノイズを追加
-#     augmenter = iaa.AdditiveGaussianNoise(scale=(0, 10)) # スケールを調整（例: 0から10）
-#     noisy_image_uint8 = augmenter.augment_image(image_uint8)
+    # imgaugを使用してガウシアンノイズを追加
+    augmenter = iaa.AdditiveGaussianNoise(scale=(0, 10)) # スケールを調整（例: 0から10）
+    noisy_image_uint8 = augmenter.augment_image(image_uint8)
 
-#     # ノイズが追加された画像を再び0から1の範囲に変換
-#     noisy_image = noisy_image_uint8.astype(np.float64) / 255.0
+    # ノイズが追加された画像を再び0から1の範囲に変換
+    noisy_image = noisy_image_uint8.astype(np.float64) / 255.0
 
-#     return noisy_image
+    return noisy_image
 
 
 # def salt_pepper_noise_and_clip(image, salt_pepper=(0.01, 0.05)):
@@ -81,9 +81,9 @@ def preprocess_image(df, resize_image):
     scaled_images = np.array([scale_image_imgaug(x) for x in preprocessed_images])
     preprocessed_images = np.concatenate((preprocessed_images, scaled_images), axis=0)
 
-    # # 5. ノイズを追加
-    # noisy_images = np.array([gaussian_noise_imgaug(x) for x in preprocessed_images])
-    # preprocessed_images = np.concatenate((preprocessed_images, noisy_images), axis=0)
+    # 5. ノイズを追加
+    noisy_images = np.array([gaussian_noise_imgaug(x) for x in preprocessed_images])
+    preprocessed_images = np.concatenate((preprocessed_images, noisy_images), axis=0)
 
     # # 6. 塩胡椒ノイズの追加
     # augmented_images = np.array([salt_pepper_noise_and_clip(x) for x in preprocessed_images])
@@ -119,7 +119,7 @@ def solution(x_test_df, train_df):
 
     # トレーニングデータのラベル生成
     train_images = preprocess_image(train_df, resize_image)
-    train_labels = np.array([fashion_categories.index(x) for x in train_df['fashionCategory']] * 2)
+    train_labels = np.array([fashion_categories.index(x) for x in train_df['fashionCategory']] * 4)
 
     # VGG16用のモデル初期化
     fashion_categories_classes = len(fashion_categories)
@@ -143,7 +143,7 @@ def solution(x_test_df, train_df):
 
     test_predictions = model.predict(test_images)
     aggregated_logits = np.zeros(image_classes * fashion_categories_classes, dtype=np.float64).reshape((image_classes, fashion_categories_classes))
-    for n in range(2):
+    for n in range(4):
         aggregated_logits += test_predictions[image_classes * n  :image_classes * (n + 1)]
 
     # カテゴリ予測の決定
