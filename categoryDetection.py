@@ -20,14 +20,19 @@ def classify_image(model_path, image_path, category_list):
     print(f"The image is classified as: {predicted_category}")
     return predicted_category
 
-# モデルファイルのパス
-model_path = '/Users/mypc/Documents/myproject/python-automation-program-contest/my_model.keras'
+def category_detection():
+    # モデルファイルのパス
+    model_path = '/Users/mypc/Documents/myproject/python-automation-program-contest/my_model.keras'
 
-# 画像ファイルのパス
-image_path = '/Users/mypc/Desktop/image.jpg'
+    # 画像ファイルのパス
+    image_path = '/Users/mypc/Desktop/image.jpg'
 
-# カテゴリリスト
-category_list = ['sneakers', 'slip-on', 'sandal', 'pumps', 'boots', 'dress-shoes', 'loafers', 'rain-shoes']
+    # カテゴリリスト
+    category_list = ['sneakers', 'slip-on', 'sandal', 'pumps', 'boots', 'dress-shoes', 'loafers', 'rain-shoes']
 
-# 関数の呼び出し
-category = classify_image(model_path, image_path, category_list)
+    # 関数の呼び出し
+    category = classify_image(model_path, image_path, category_list)
+    print(f"Classified category: {category}")
+
+    # 辞書型で結果を返却
+    return {"response": category}

@@ -14,7 +14,7 @@ os.makedirs(image_dir, exist_ok=True)
 category_list = ['sneakers', 'slip-on', 'sandal', 'pumps', 'boots', 'dress-shoes', 'loafers', 'rain-shoes']
 for category in category_list:
     count = 0  # カウンターをカテゴリごとにリセット
-    for page_number in range(1, 6):  # pno=1からpno=5まで
+    for page_number in range(1, 2):  # pno=1からpno=2まで
         search_query = category
         url = f"https://zozo.jp/category/shoes/{search_query}/?pno={page_number}"
         target_class = 'p-search-list'
