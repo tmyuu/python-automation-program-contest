@@ -2,9 +2,9 @@ import runpy
 from categoryDetection import category_detection
 from extract_mercariImages import mercari_scraping
 
-runpy.run_path("./extract_zozoImages.py")
-runpy.run_path("./generate_zozoPkl.py")
-runpy.run_path("./trainingModel.py")
+# runpy.run_path("./extract_zozoImages.py")
+# runpy.run_path("./generate_zozoPkl.py")
+# runpy.run_path("./trainingModel.py")
 
 # category_detection関数を実行し、結果を取得
 result = category_detection()
