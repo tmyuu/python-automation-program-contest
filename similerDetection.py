@@ -5,6 +5,7 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg16 import preprocess_input
 from sklearn.metrics.pairwise import cosine_similarity
 from PIL import Image
+import webbrowser
 import io
 
 # モデルのロード (VGG16を使用)
@@ -44,4 +45,10 @@ top_3_similar_images = similarity_scores[1:4]  # 最初の画像自体は除外
 
 # トップ3の類似画像のimageNameを表示
 for i, (index, score) in enumerate(top_3_similar_images):
-    print(f"Rank {i+1}, Image Name: {df['imageName'].iloc[index]}, Similarity Score: {score}")
+    image_name = df['imageName'].iloc[index]
+    print(f"Rank {i+1}, Image Name: {image_name}, Similarity Score: {score}")
+
+    # MercariのURLを生成し、ブラウザで開く
+    url = f'https://jp.mercari.com/item/{image_name}'
+    print(f"Opening URL: {url}")
+    webbrowser.open(url)
