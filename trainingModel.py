@@ -132,7 +132,7 @@ def solution(x_test_df, train_df):
                   metrics=['accuracy'])
 
     # モデルのトレーニング
-    model.fit(train_images, train_labels, epochs=20, batch_size=32)
+    model.fit(train_images, train_labels, epochs=10, batch_size=32)
 
     # モデルの保存
     model.save("./my_model.keras")
