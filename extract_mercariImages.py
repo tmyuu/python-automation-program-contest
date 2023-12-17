@@ -34,7 +34,7 @@ def mercari_scraping(response):
 
     count = 0
     try:
-        for page in range(5):  # 5ページ分処理
+        for page in range(3):  # 3ページ分処理
             page_token = f"v1%{page + 1}A"  # page_tokenの値を更新
             url = f"https://jp.mercari.com/search?keyword={search_query}&order=desc&sort=created_time&status=on_sale&page_token={page_token}"
 
